@@ -18,9 +18,6 @@ $(document).ready(function() {
 			"options": undefined,
 			"active": undefined
 		},
-		current: function() {
-			return this.get('active');
-		},
 		size: function() {
 			return this.get('options').size();
 		}
@@ -43,10 +40,7 @@ $(document).ready(function() {
 			"notSelectedBoxColor": "#f6f7f6"
 		},
 		boxes: {},
-		events: {},
 		initialize: function() {
-			var x = this.options['x'];
-			var y = this.options['y'];
 			var paper = this.options['paper'];
 			var numberOfBoxes = this.model.size();
 			var transparent = {
@@ -60,22 +54,24 @@ $(document).ready(function() {
 
 			for (var i = 0; i < numberOfBoxes; i++) {
 				var isFirst = (i == 0);
-				var isSelected = (this.model.get('options').models[i].get('active') === true);
 				var isLast = (i == numberOfBoxes - 1);
 
 				var tlRadius = isFirst ? this.options["radius"] : 0;
 				var trRadius = isLast ? this.options["radius"] : 0;
 				var brRadius = isLast ? this.options["radius"] : 0;
 				var blRadius = isFirst ? this.options["radius"] : 0;
-				var diff = this.options["x"] + i * this.options["boxWidth"] + (this.options["boxWidth"] - this.options["iconWidth"]) / 2;
+				var x = this.options["x"] + i * this.options["boxWidth"];
+				var y = this.options['y'];
+				var diff = x + (this.options["boxWidth"] - this.options["iconWidth"]) / 2;
 
 				var option = this.model.get('options').models[i];
 				var optionValue = option.get('value');
 				
 				// underlying rounded rectangle indicating state
+				// on initialize nothing is selected
 				this.boxes[optionValue] = paper.roundedRect(
-				this.options["x"] + i * this.options["boxWidth"], this.options["y"], this.options["boxWidth"], this.options["boxHeight"], tlRadius, trRadius, brRadius, blRadius).attr({
-					fill: isSelected ? this.options["selectedBoxColor"] : this.options["notSelectedBoxColor"],
+				x , y, this.options["boxWidth"], this.options["boxHeight"], tlRadius, trRadius, brRadius, blRadius).attr({
+					fill: this.options["notSelectedBoxColor"],
 					"stroke": this.options["strokeColor"],
 					"stroke-width": this.options["strokeThickness"]
 				});
