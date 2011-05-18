@@ -84,9 +84,8 @@ $(document).ready(function() {
 				$(transparentBox.node).attr("class", "picker " + "id." + this.model.id + " value." + option.get('value'));	
 			}
 		},
-		render: function() {
+		render: function(currentOption) {
 			for (var key in this.boxes) {
-				var currentOption = this.model.get('active');
 				var isSelected = (currentOption && currentOption.get('value') === key);
 				this.boxes[key].attr({
 					fill: isSelected ? this.options["selectedBoxColor"] : this.options["notSelectedBoxColor"]
@@ -124,10 +123,8 @@ $(document).ready(function() {
 	});
 	lowlightView.initialize();
 
-	// normally you would pass the changed attribute as the second parameter
-	// but render method can't with undefined values, so we leave it out 
-	lowlightOptionGroup.bind('change:active', function(model) {
-	 	lowlightView.render();
+	lowlightOptionGroup.bind('change:active', function(model, currentOption) {
+	 	lowlightView.render(currentOption);
 	});
 
 	$(".picker").bind('click', function(){
