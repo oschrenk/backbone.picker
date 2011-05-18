@@ -31,7 +31,6 @@ $(document).ready(function() {
 	});
 
 	var OptionGroupView = Backbone.View.extend({
-		el: 'body',
 		options: {
 			"x": 0,
 			"y": 0,
