@@ -16,7 +16,14 @@ $(document).ready(function() {
 		defaults: {
 			"id": undefined,
 			"options": undefined,
-			"active": undefined
+			"active": undefined,
+			"defaultValue": undefined
+		},
+		value: function() {
+			if (this.active) {
+				return this.active.get('value');
+			}
+			return defaultValue;
 		},
 		size: function() {
 			return this.get('options').size();
