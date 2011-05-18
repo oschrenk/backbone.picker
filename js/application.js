@@ -20,10 +20,10 @@ $(document).ready(function() {
 			"defaultValue": undefined
 		},
 		value: function() {
-			if (this.active) {
-				return this.active.get('value');
+			if (this.get('active')) {
+				return this.get('active').get('value');
 			}
-			return defaultValue;
+			return this.get('defaultValue');
 		},
 		size: function() {
 			return this.get('options').size();
@@ -101,8 +101,8 @@ $(document).ready(function() {
 		}
 	});
 
-	var width = 768;
-	var height = 1024 / 2;
+	var width = 200;
+	var height = 200 / 2;
 	var canvas = Raphael("canvas", width, height);
 
 	var lowlightOptions = new Options;
@@ -121,7 +121,8 @@ $(document).ready(function() {
 
 	var lowlightOptionGroup = new OptionGroup({
 		"id": "test",
-		"options": lowlightOptions
+		"options": lowlightOptions,
+		"defaultValue": "none"
 	});
 
 	var lowlightView = new OptionGroupView({
@@ -130,8 +131,15 @@ $(document).ready(function() {
 	});
 	lowlightView.initialize();
 
+	var widgets = {};
+	widgets["test"] = lowlightOptionGroup;
+
 	lowlightOptionGroup.bind('change:active', function(model, currentOption) {
 	 	lowlightView.render(currentOption);
+	});
+	
+	lowlightOptionGroup.bind('change:active', function(model) {
+		$('#option').html(model.value());
 	});
 
 	$(".picker").bind('click', function(){
@@ -147,9 +155,6 @@ $(document).ready(function() {
 		}
 	});
 	
-	var widgets = {};
-	widgets["test"] = lowlightOptionGroup;
-	
 	function getOptionCharacteristic(classes, characteristic) {
 		var c = classes.split(' ');
 		for (var i = 0, length = c.length; i < length; ++i) {
@@ -159,5 +164,5 @@ $(document).ready(function() {
 		}
 		return undefined;
 	}
-
+	
 });
