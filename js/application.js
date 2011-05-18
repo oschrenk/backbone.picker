@@ -36,10 +36,6 @@ $(document).ready(function() {
 	lowlightOptionGroup.bind('change:active', function(model, currentOption) {
 	 	lowlightView.render(currentOption);
 	});
-	
-	lowlightOptionGroup.bind('change:active', function(model) {
-		$('#option').html(model.value());
-	});
 
 	$(".picker").bind('click', function(){
 		var classes = $(this).attr("class");
